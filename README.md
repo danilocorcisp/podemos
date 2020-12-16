@@ -1,6 +1,6 @@
 # podemos
 
-This project was built using React and extensions from Turbo 360.
+This project was built using React and extensions from Turbo 360 and a Colorlib template.
 
 ## Instructions
 
