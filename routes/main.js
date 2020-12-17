@@ -16,9 +16,9 @@ router.get("/search", async (req, res, next) => {
         },
     });
     const { results } = data;
-    const podcasts = results.map((podcast) => {
+    const podcasts = results.map((podcast, idx) => {
         return {
-            id: podcast.artistId,
+            id: podcast.idx,
             name: podcast.artistName,
             trackName: podcast.trackName,
             image: podcast.artworkUrl600,

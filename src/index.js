@@ -8,6 +8,8 @@ import axios from "axios";
 const App = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [podcasts, setPodcasts] = useState([]);
+    const [episodes, setEpisodes] = useState([]);
+    const [selectedPodcast, setSelectedPodcast] = useState(null);
     // const podcasts = [
     //     {
     //         id: 0,
@@ -28,43 +30,43 @@ const App = () => {
     //         categories: ["horror", "scifi"],
     //     },
     // ];
-    const episodes = [
-        {
-            id: 0,
-            title: "Episode 1",
-            image: "/images/img_1.jpg",
-            trackUrl:
-                "http://hwcdn.libsyn.com/p/e/2/d/e2d49676d65218ec/p1541a.mp3?c_id=84308228&cs_id=84308228&expiration=1601254668&hwt=ccab3206052417d0e901722ab00c9c88",
-        },
-        {
-            id: 1,
-            title: "Episode 2",
-            image: "/images/img_2.jpg",
-            trackUrl:
-                "http://hwcdn.libsyn.com/p/e/2/d/e2d49676d65218ec/p1541a.mp3?c_id=84308228&cs_id=84308228&expiration=1601254668&hwt=ccab3206052417d0e901722ab00c9c88",
-        },
-        {
-            id: 2,
-            title: "Episode 3",
-            image: "/images/img_3.jpg",
-            trackUrl:
-                "http://hwcdn.libsyn.com/p/e/2/d/e2d49676d65218ec/p1541a.mp3?c_id=84308228&cs_id=84308228&expiration=1601254668&hwt=ccab3206052417d0e901722ab00c9c88",
-        },
-        {
-            id: 3,
-            title: "Episode 4",
-            image: "/images/img_4.jpg",
-            trackUrl:
-                "http://hwcdn.libsyn.com/p/e/2/d/e2d49676d65218ec/p1541a.mp3?c_id=84308228&cs_id=84308228&expiration=1601254668&hwt=ccab3206052417d0e901722ab00c9c88",
-        },
-        {
-            id: 4,
-            title: "Episode 5",
-            image: "/images/img_5.jpg",
-            trackUrl:
-                "http://hwcdn.libsyn.com/p/e/2/d/e2d49676d65218ec/p1541a.mp3?c_id=84308228&cs_id=84308228&expiration=1601254668&hwt=ccab3206052417d0e901722ab00c9c88",
-        },
-    ];
+    // const episodes = [
+    //     {
+    //         id: 0,
+    //         title: "Episode 1",
+    //         image: "/images/img_1.jpg",
+    //         trackUrl:
+    //             "http://hwcdn.libsyn.com/p/e/2/d/e2d49676d65218ec/p1541a.mp3?c_id=84308228&cs_id=84308228&expiration=1601254668&hwt=ccab3206052417d0e901722ab00c9c88",
+    //     },
+    //     {
+    //         id: 1,
+    //         title: "Episode 2",
+    //         image: "/images/img_2.jpg",
+    //         trackUrl:
+    //             "http://hwcdn.libsyn.com/p/e/2/d/e2d49676d65218ec/p1541a.mp3?c_id=84308228&cs_id=84308228&expiration=1601254668&hwt=ccab3206052417d0e901722ab00c9c88",
+    //     },
+    //     {
+    //         id: 2,
+    //         title: "Episode 3",
+    //         image: "/images/img_3.jpg",
+    //         trackUrl:
+    //             "http://hwcdn.libsyn.com/p/e/2/d/e2d49676d65218ec/p1541a.mp3?c_id=84308228&cs_id=84308228&expiration=1601254668&hwt=ccab3206052417d0e901722ab00c9c88",
+    //     },
+    //     {
+    //         id: 3,
+    //         title: "Episode 4",
+    //         image: "/images/img_4.jpg",
+    //         trackUrl:
+    //             "http://hwcdn.libsyn.com/p/e/2/d/e2d49676d65218ec/p1541a.mp3?c_id=84308228&cs_id=84308228&expiration=1601254668&hwt=ccab3206052417d0e901722ab00c9c88",
+    //     },
+    //     {
+    //         id: 4,
+    //         title: "Episode 5",
+    //         image: "/images/img_5.jpg",
+    //         trackUrl:
+    //             "http://hwcdn.libsyn.com/p/e/2/d/e2d49676d65218ec/p1541a.mp3?c_id=84308228&cs_id=84308228&expiration=1601254668&hwt=ccab3206052417d0e901722ab00c9c88",
+    //     },
+    // ];
 
     const onInputTyped = (e) => {
         console.log(
@@ -92,6 +94,13 @@ const App = () => {
                 setPodcasts(data.podcasts);
             })
             .catch((err) => {});
+    };
+
+    const selectPodcast = (podcast) => {
+        console.log(
+            "🚀 ~ file: index.js ~ line 100 ~ selectPodcast ~ podcast",
+            podcast
+        );
     };
 
     return (
@@ -123,6 +132,9 @@ const App = () => {
                                         <PodcastRow
                                             key={podcast.id}
                                             {...podcast}
+                                            onSelect={() =>
+                                                selectPodcast(podcast)
+                                            }
                                         />
                                     ))}
                                 </ul>
