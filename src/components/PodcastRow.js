@@ -1,12 +1,6 @@
 import React from "react";
 
 const PodcastRow = ({ name, image, categories, onSelect }) => {
-    // const clickHandler = (e) => {
-    //     e.preventDefault();
-    //     onSelect({
-    //         name,
-    //     });
-    // };
     return (
         <li>
             <a

@@ -1,6 +1,6 @@
-# podemos
+# Podemos
 
-This project was built using React and extensions from Turbo 360 and a Colorlib template.
+This project was built using React and extensions from Turbo 360 and a Colorlib template. It uses Firebase to connect the user to the plataform
 
 ## Instructions
 

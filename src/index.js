@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDom from "react-dom";
 import Header from "./components/Header";
 import PodcastRow from "./components/PodcastRow";
@@ -10,26 +10,7 @@ const App = () => {
     const [podcasts, setPodcasts] = useState([]);
     const [episodes, setEpisodes] = useState([]);
     const [selectedPodcast, setSelectedPodcast] = useState(null);
-    // const podcasts = [
-    //     {
-    //         id: 0,
-    //         name: "pod1",
-    //         image: "/images/person_1.jpg",
-    //         categories: ["sports", "culture"],
-    //     },
-    //     {
-    //         id: 1,
-    //         name: "pod2",
-    //         image: "/images/person_2.jpg",
-    //         categories: ["history", "jazz"],
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "pod3",
-    //         image: "/images/person_3.jpg",
-    //         categories: ["horror", "scifi"],
-    //     },
-    // ];
+
     // const episodes = [
     //     {
     //         id: 0,
@@ -69,10 +50,10 @@ const App = () => {
     // ];
 
     const onInputTyped = (e) => {
-        console.log(
-            "🚀 ~ file: index.js ~ line 70 ~ onInputTyped ~ e",
-            e.target.value
-        );
+        // console.log(
+        //     "🚀 ~ file: index.js ~ line 70 ~ onInputTyped ~ e",
+        //     e.target.value
+        // );
         setSearchTerm(e.target.value);
     };
 
@@ -96,12 +77,39 @@ const App = () => {
             .catch((err) => {});
     };
 
-    const selectPodcast = (podcast) => {
+    const selectPodcast = (podcast, event) => {
+        event.preventDefault();
         console.log(
             "🚀 ~ file: index.js ~ line 100 ~ selectPodcast ~ podcast",
             podcast
         );
+        setSelectedPodcast(podcast);
     };
+
+    useEffect(() => {
+        console.log("SELECTED PODCAST CHANGED!!!");
+        if (!selectedPodcast) return;
+        const url = `/feed?url=${selectedPodcast.feed}`;
+        axios({
+            url,
+            method: "get",
+        })
+            .then(({ data }) => {
+                console.log("FEED: " + JSON.stringify(data));
+                const { item } = data;
+                const tracks = item.map((t, index) => {
+                    return {
+                        id: index,
+                        title: t.title[0],
+                        image: selectedPodcast.image,
+                        trackUrl: t.enclosure[0]["$"].url,
+                    };
+                });
+
+                setEpisodes(tracks);
+            })
+            .catch((err) => {});
+    }, [selectedPodcast]);
 
     return (
         <div className="site-wrap">
@@ -120,6 +128,7 @@ const App = () => {
                                         className="form-control mb-4"
                                     />
                                     <button
+                                        // disabled={this.state.value < 1}
                                         onClick={onSearchBtnClicked}
                                         className="btn btn-info p-1 ml-2"
                                         style={{ height: 32 }}
@@ -132,8 +141,8 @@ const App = () => {
                                         <PodcastRow
                                             key={podcast.id}
                                             {...podcast}
-                                            onSelect={() =>
-                                                selectPodcast(podcast)
+                                            onSelect={(e) =>
+                                                selectPodcast(podcast, e)
                                             }
                                         />
                                     ))}
